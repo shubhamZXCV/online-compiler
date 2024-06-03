@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: monospace;
+      }
+      .ide {
+        position: relative;
+
+        height: 95vh;
+      }
+      .editor button {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        background-color: green;
+        border: 1px solid green;
+        border-radius: 5px;
+        font-weight: bolder;
+      }
+
+      .terminal select {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+      }
+
+      .editor {
+        position: relative;
+        box-sizing: border-box;
+        height: 70%;
+        overflow: auto;
+      }
+
+      .editor textarea {
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+      }
+
+      .terminal {
+        position: relative;
+        box-sizing: border-box;
+        background-color: black;
+        color: green;
+        font-weight: bold;
+        padding: 1rem;
+        height: 30%;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ide">
+      <!-- <select name="" id=""></select> -->
+      <div class="editor">
+        <button onclick="run()">RUN</button>
+        <textarea name="" id="" cols="30" rows="10" value="vxcvxcvxvx">
+        </textarea>
+      </div>
+      <div class="terminal">
+        <select name="" id="">
+          <option value="python">python</option>
+          <option value="js">js</option>
+          <option value="c" selected>c</option>
+          <option value="c++">c++</option>
+        </select>
+        <div>Terminal</div>
+        <hr />
+        <div><%= error %></div>
+        <div><%= output %></div>
+      </div>
+    </div>
+    <script>
+      let run = async () => {
+        let editor = document.getElementsByTagName("textarea")[0];
+        let data = { code: editor.value };
+        console.log(data);
+        const response = await fetch("http://127.0.0.1:3000/compile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+      };
+    </script>
+  </body>
+</html>
